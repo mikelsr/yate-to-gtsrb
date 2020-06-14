@@ -3,11 +3,16 @@
 function genppm {
 	png_name=$2/$(basename "${1}.png") 
 	ppm_name="${png_name%.*}.ppm"
-	convert -coalesce $1 $png_name
-	#convert -coalesce $1 -resize 32x32\! $png_name
-	mogrify -format ppm $png_name
-	rm $png_name
-	echo "Generated ${ppm_name}"
+	convert -coalesce $1 -resize 32x32\! $png_name
+	
+	# Uncomment this lines for PNG, comment for PPM
+        echo "Generated ${png_name}"
+	rm $ppm_name
+	
+	# Uncomment this lines for PPM, comment for PNG
+        #mogrify -format ppm $png_name
+	#echo "Generated ${ppm_name}"
+	#rm $png_name
 }
 
 function iter {

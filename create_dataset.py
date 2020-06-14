@@ -23,10 +23,20 @@ def classify(image):
     b = cf.detectMultiScale(gray, SCALE_FACTOR, MIN_NEIGHBORS)
     return b[0]
 
+def scale_box(w, h, box):
+    return [
+        (b[0]*32)//w,
+        (b[1]*32)//h,
+        (b[2]*32)//w,
+        (b[3]*32)//h,
+    ]
+
 def gen_row(dname, fname, w, h, box):
-    class_id = dname.replace("0", "")
+    class_id = str(int(dname))
+    b = scale_box(w, h, box)
     return [
         fname, w, h,
+#        fname, 32, 32,
         b[0], b[1], b[2], b[3],
         class_id
     ]
@@ -36,7 +46,7 @@ for d in listdir(DS_FOLDER):
     path = join(DS_FOLDER, d)
     csv_file = join(path, f"GT-{d}.csv")
     with open(csv_file, mode='w') as csv_f:
-        w = csv.writer(csv_f, delimiter=",")
+        w = csv.writer(csv_f, delimiter=";")
         w.writerow(HEADERS)
         for image_file in listdir(path):
             if not image_file.endswith(".ppm"):
