@@ -7,6 +7,12 @@ from os.path import join
 from os import listdir
 from PIL import Image
 
+from sys import argv
+
+RESIZE = False
+
+if len(argv) > 1 and argv[1] == "resize":
+    RESIZE = True
 
 CLASSIFIER_PATH="/usr/share/opencv4/haarcascades/haarcascade_frontalface_default.xml"
 DS_FOLDER = "out"
@@ -33,7 +39,7 @@ def scale_box(w, h, box):
 
 def gen_row(dname, fname, w, h, box):
     class_id = str(int(dname))
-    b = scale_box(w, h, box)
+    b = scale_box(w, h, box) if RESIZE else box
     return [
         fname, w, h,
 #        fname, 32, 32,

@@ -6,13 +6,13 @@ function genppm {
 	convert -coalesce $1 -resize 32x32\! $png_name
 	
 	# Uncomment this lines for PNG, comment for PPM
-        echo "Generated ${png_name}"
-	rm $ppm_name
+        #echo "Generated ${png_name}"
+	#rm $ppm_name
 	
 	# Uncomment this lines for PPM, comment for PNG
-        #mogrify -format ppm $png_name
-	#echo "Generated ${ppm_name}"
-	#rm $png_name
+        mogrify -format ppm $png_name
+	echo "Resized ${ppm_name}"
+	rm $png_name
 }
 
 function iter {
